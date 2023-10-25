@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <title>tax_route</title>
+    </head>
+    <body>
+        <form action="{{ url_for('tax_route.calc') }}" id="form" method="post">
+            <br>city_id: <input type="text" name="city_id" id="city_id">
+            <br>hp_car: <input type="text" name="hp_car" id="hp_car">
+            <br>production_year_car: <input type="text" name="production_year_car" id="production_year_car">
+            <br><input type="submit">
+        </form>
+        <div id="result"></div>
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <script type="text/javascript">
+            $(document).on("submit","#form",function(e) {
+                e.preventDefault();
+                $.ajax({
+                    type:"POST",
+                    url:"{{ url_for('tax_route.calc') }}",
+                    data: JSON.stringify({
+                        city_id:$("#city_id").val(),
+                        hp_car:$("#hp_car").val(),
+                        production_year_car:$("#production_year_car").val()
+                    }),
+                    contentType: "application/json;charset=UTF-8"
+                }).done(function(reply) {
+                        $('#result').html("Tax: " + reply.tax);
+                    });
+            });
+        </script>
+    </body>
+</html>

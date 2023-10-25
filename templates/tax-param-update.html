@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <title>tax_param_add</title>
+    </head>
+    <body>
+        <form action="{{ url_for('tax_param_route.update') }}" id="form" method="post">
+            <br>id: <input type="text" name="id" id="id">
+            <br>city_id: <input type="text" name="city_id" id="city_id">
+            <br>from_hp_car: <input type="text" name="from_hp_car" id="from_hp_car">
+            <br>to_hp_car: <input type="text" name="to_hp_car" id="to_hp_car">
+            <br>from_production_year_car: <input type="text" name="from_production_year_car" id="from_production_year_car">
+            <br>to_production_year_car: <input type="text" name="to_production_year_car" id="to_production_year_car">
+            <br>rate: <input type="text" name="rate" id="rate">
+            <br><input type="submit">
+        </form>
+        <div id="result"></div>
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <script type="text/javascript">
+            $(document).on("submit","#form",function(e) {
+                e.preventDefault();
+                $.ajax({
+                    type:"POST",
+                    url:"{{ url_for('tax_param_route.update') }}",
+                    data: JSON.stringify({
+                        id:$("#id").val(),
+                        city_id:$("#city_id").val(),
+                        from_hp_car:$("#from_hp_car").val(),
+                        to_hp_car:$("#to_hp_car").val(),
+                        from_production_year_car:$("#from_production_year_car").val(),
+                        to_production_year_car:$("#to_production_year_car").val(),
+                        rate:$("#rate").val()
+                    }),
+                    contentType: "application/json;charset=UTF-8"
+                }).done(function(reply) {
+                        $('#result').html("Message: " + reply.message);
+                    });
+            });
+        </script>
+    </body>
+</html>

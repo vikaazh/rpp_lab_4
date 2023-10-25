@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <title>region_add</title>
+    </head>
+    <body>
+        <form action="{{ url_for('region_routes.add') }}" id="form" method="post">
+            <br>id: <input type="text" name="id" id="id">
+            <br>name: <input type="text" name="name" id="name">
+            <br><input type="submit">
+        </form>
+        <div id="result"></div>
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <script type="text/javascript">
+            $(document).on("submit","#form",function(e) {
+                e.preventDefault();
+                $.ajax({
+                    type:"POST",
+                    url:"{{ url_for('region_routes.add') }}",
+                    data: JSON.stringify({
+                        id:$("#id").val(),
+                        name:$("#name").val()
+                    }),
+                    contentType: "application/json;charset=UTF-8"
+                }).done(function(reply) {
+                        $('#result').html("Message: " + reply.message);
+                    });
+            });
+        </script>
+    </body>
+</html>

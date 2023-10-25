@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <title>region_delete</title>
+    </head>
+    <body>
+        <form action="{{ url_for('region_routes.delete') }}" id="form" method="post">
+            <br>id: <input type="text" name="id" id="id">
+            <br><input type="submit">
+        </form>
+        <div id="result"></div>
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <script type="text/javascript">
+            $(document).on("submit","#form",function(e) {
+                e.preventDefault();
+                $.ajax({
+                    type:"POST",
+                    url:"{{ url_for('region_routes.delete') }}",
+                    data: JSON.stringify({
+                        id:$("#id").val()
+                    }),
+                    contentType: "application/json;charset=UTF-8"
+                }).done(function(reply) {
+                        $('#result').html("Message: " + reply.message);
+                    });
+            });
+        </script>
+    </body>
+</html>
